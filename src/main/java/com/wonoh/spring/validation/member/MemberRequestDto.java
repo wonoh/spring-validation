@@ -28,10 +28,10 @@ public class MemberRequestDto {
 
     private String[] parsePhone() {
         String[] phones = new String[3];
-        int mid = phoneNumber.length() == 10? 7:8;
+        int mid = 7;
         phones[0] = phoneNumber.substring(0,3);
-        phones[1] = phoneNumber.substring(4,mid);
-        phones[2] = phoneNumber.substring(mid,phoneNumber.length()-1);
+        phones[1] = phoneNumber.substring(3,mid);
+        phones[2] = phoneNumber.substring(mid,phoneNumber.length());
         return phones;
     }
 

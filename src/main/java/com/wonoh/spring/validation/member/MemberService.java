@@ -1,6 +1,7 @@
 package com.wonoh.spring.validation.member;
 
 
+import com.wonoh.spring.validation.exception.ValidCustomException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ public class MemberService {
 
     @Transactional
     public Long save(MemberRequestDto dto){
+        verifyDuplicateEmail(dto.getEmail());
         return memberRepository.save(dto.toEntity()).getId();
     }
 
@@ -31,6 +33,13 @@ public class MemberService {
                 .map(MemberResponseDto::new)
                 .collect(Collectors.toList());
 
+    }
+
+
+    private void verifyDuplicateEmail(String email){
+        if(memberRepository.findByEmail(email).isPresent()){
+            throw new ValidCustomException("이미 사용중인 이메일 주소입니다","email");
+        }
     }
 
 
